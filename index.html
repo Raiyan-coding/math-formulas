@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math all formulas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        .auth-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            margin: 20px auto;
+            max-width: 500px;
+            transition: all 0.3s ease;
+        }
+        .download-box {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background: #4a90e2;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+        .download-btn {
+            background: #28a745;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .download-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .password-container {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="auth-box">
+            <div class="text-center mb-4">
+                <i class="fas fa-lock fa-3x text-primary mb-3"></i>
+                <h2 class="mb-3">জেনারেল ম্যাথ সব সূত্র</h2>
+                <p class="text-muted">পাসওয়ার্ড পাওয়ার জন্য রাইয়ানকে ১০ টাকা পাঠান</p>
+                <p class="text-muted">তার দেয়া password use করুন</p>
+            </div>
+            
+            <div class="mb-4 password-container">
+                <input type="password" id="password" class="form-control" 
+                       placeholder="Enter Authorization Code">
+                <i class="fas fa-eye-slash password-toggle" 
+                   onclick="togglePasswordVisibility()"></i>
+            </div>
+
+            <button class="btn btn-primary w-100" onclick="checkPassword()">
+                <i class="fas fa-unlock-alt me-2"></i>Authenticate
+            </button>
+
+            <div id="downloadSection" class="download-box text-center" style="display: none;">
+                <h4 class="mb-3">Authorization Successful</h4>
+                <p class="text-muted mb-3">You can now download the secured document</p>
+                <a id="downloadLink" 
+                   class="download-btn">
+                    <i class="fas fa-file-download me-2"></i>Download Document
+                </a>
+            </div>
+
+            <div id="errorMessage" class="alert alert-danger mt-3" style="display: none;">
+                Invalid authorization code. Please try again.
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Security Enhancements
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'C') || 
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const correctPassword = "01839";
+            const downloadSection = document.getElementById('downloadSection');
+            const errorMessage = document.getElementById('errorMessage');
+            const downloadLink = document.getElementById('downloadLink');
+
+            if (password === correctPassword) {
+                // Set href only when password is correct
+                downloadLink.href = 'https://raw.githubusercontent.com/Raiyan-coding/math-formulas/c78761db52e983a67fa462403ea8cdedee19c7c2/Genarel%20math%20formulas.pdf';
+                downloadLink.classList.add('active');
+                downloadSection.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Auto-remove link after 30 seconds
+                setTimeout(() => {
+                    downloadLink.removeAttribute('href');
+                    downloadLink.classList.remove('active');
+                }, 30000);
+            } else {
+                errorMessage.style.display = 'block';
+                downloadSection.style.display = 'none';
+                downloadLink.removeAttribute('href');
+                downloadLink.classList.remove('active');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            }
+        }
+
+        // Additional security measures
+        window.addEventListener('blur', () => {
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.removeAttribute('href');
+            downloadLink.classList.remove('active');
+        });
+
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+
+        // Prevent drag-and-drop
+        document.addEventListener('dragstart', (e) => e.preventDefault());
+        document.addEventListener('drop', (e) => e.preventDefault());
+    </script>
+</body>
+</html>
